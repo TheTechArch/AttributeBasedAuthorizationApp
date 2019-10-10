@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AttributeBasedAuthorizationApp.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,11 +28,13 @@ namespace AttributeBasedAuthorizationApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddHttpContextAccessor();
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("InstanceRead", policy => policy.Requirements.Add(new InstanceAccessRequirement(ActionType.Read)));
-            })
+                options.AddPolicy("DataRead", policy => policy.Requirements.Add(new DataAccessRequirement("read")));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, DataAccessHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -21,12 +21,8 @@ namespace AttributeBasedAuthorizationApp.Authorization
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, DataAccessRequirement requirement)
         {
-
-            HttpContext.User.
-
-            _httpContextAccessor.HttpContext.GetRouteData();
-
-            throw new NotImplementedException();
+           RouteData routeData = _httpContextAccessor.HttpContext.GetRouteData();
+           return Task.CompletedTask;
         }
     }
 }

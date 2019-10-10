@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +20,9 @@ namespace AttributeBasedAuthorizationApp.Controllers
         }
 
         // GET: api/Data/5
+
         [HttpGet("{id}", Name = "Get")]
+        [Authorize(Policy = "DataRead")]
         public string Get(int id)
         {
             return "value";
