@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,18 +15,21 @@ namespace AttributeBasedAuthorizationApp.Controllers
     {
         // GET: api/Data
         [HttpGet]
+        [Authorize]
         public IEnumerable<string> Get()
         {
+            ClaimsPrincipal claimsPrincipal = User;
             return new string[] { "value1", "value2" };
         }
 
         // GET: api/Data/5
 
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{dataid}", Name = "Get")]
         [Authorize(Policy = "DataRead")]
         public string Get(int id)
         {
-            return "value";
+            ClaimsPrincipal claimsPrincipal = User;
+           return "value";
         }
 
         // POST: api/Data
